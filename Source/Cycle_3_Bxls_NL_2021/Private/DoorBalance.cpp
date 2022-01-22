@@ -59,7 +59,7 @@ void UDoorBalance::SetupDelegateTriggerCollision()
 	}
 	else
 	{
-		UE_LOG(LogTemp, Error, TEXT("triggerVolumeInstance Not Found"));
+		//UE_LOG(LogTemp, Error, TEXT("triggerVolumeInstance Not Found"));
 	}
 	
 }
@@ -89,11 +89,13 @@ void UDoorBalance::SetupTimeline()
 	}
 	else //si on ne trouve pas la courbe door curve alors on affiche un msg d'erreur
 	{
+		/*
 		if (GEngine != nullptr)
 		{
 			GEngine->AddOnScreenDebugMessage(5, 10, FColor::Red, TEXT("Curve float non initialisée"));
 		}
 		UE_LOG(LogTemp, Error, TEXT("Curve float non init, veuillez l'ajouter dans BP_OpenDoor -> DoorBalance"));
+		*/
 	}
 }
 
@@ -127,10 +129,12 @@ void UDoorBalance::ToogleAndPlayDoor()
 		if(isDoorOpen)
 		{
 			timeline.Play();
+
+			/*
 			if (GEngine != nullptr)
 			{
 				GEngine->AddOnScreenDebugMessage(7, 5, FColor::Blue,TEXT("ToogleAndPlayDoorOk"));
-			}
+			}*/
 		}
 		else
 		{
@@ -183,25 +187,29 @@ float UDoorBalance::GetMassFromObjectCollided(AActor* actor)
 		if(ensure(actorMesh))
 		{
 			flt_massActor = actorMesh->GetMass();
-			UE_LOG(LogTemp, Warning, TEXT("Static mesh actor collided find"));
+			//UE_LOG(LogTemp, Warning, TEXT("Static mesh actor collided find"));
 			return flt_massActor;
 		}
 		else
 		{
+			/*
 			if (GEngine != nullptr)
 			{
 				GEngine->AddOnScreenDebugMessage(7, 10, FColor::Red, TEXT("Not Static mesh actor collided"));
 			}
 			UE_LOG(LogTemp, Error, TEXT("Static mesh actor not find"));
+			*/
 		}
 	}
 	else
 	{
+		/*
 		if (GEngine != nullptr)
 		{
 			GEngine->AddOnScreenDebugMessage(7, 10, FColor::Red, TEXT("Not actor collided"));
 		}
 		UE_LOG(LogTemp, Error, TEXT("Actor not find"));
+		*/
 	}
 	return 0.f;
 }
@@ -217,11 +225,13 @@ void UDoorBalance::UpdateMass(float flt_valueOperate, bool isIncrm)
 {
 	isIncrm ? flt_BalanceMass+= flt_valueOperate : flt_BalanceMass-= flt_valueOperate;
 
+	/*
 	if (GEngine != nullptr)
 	{
 		FString theFloatStr = FString::SanitizeFloat(flt_BalanceMass);
 		GEngine->AddOnScreenDebugMessage(6, 5, FColor::Blue, theFloatStr);
 	}
+	*/
 }
 
 /****************************************************************************************************

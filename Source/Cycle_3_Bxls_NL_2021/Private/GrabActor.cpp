@@ -39,12 +39,13 @@ void UGrabActor::GrabPressed(UPhysicsHandleComponent* ptrPhysicsHandle)
 	DrawDebugLine(GetWorld(), setupStartPoint(), setupEndPoint(), FColor::Green, false, 5.0f, 0, 2.0f);
 
 	//creation raycast, si le raycast touche bien un objet alors on affiche grabCollision
+	/*
 	if (this->GetOwner()->GetWorld()->LineTraceSingleByObjectType(Hit, setupStartPoint(), setupEndPoint(), objectsParam, params)) {
 		UE_LOG(LogTemp, Warning, TEXT("grabCollision"));
 		//grabed object :
 		Handle(ptrPhysicsHandle, Hit);
 			
-	}
+	}*/
 }
 
 void UGrabActor::Handle(UPhysicsHandleComponent* ptrPhysicsHandle, FHitResult Hit){
@@ -61,10 +62,12 @@ void UGrabActor::Handle(UPhysicsHandleComponent* ptrPhysicsHandle, FHitResult Hi
 void UGrabActor::GrabReleased(UPhysicsHandleComponent* ptrPhysicsHandle)
 {
 	//quand on release la touche alors l'objet grabed est relaché
+	/*
 	if (ptrPhysicsHandle != nullptr) {
 		ptrPhysicsHandle->ReleaseComponent();
 		UE_LOG(LogTemp, Warning, TEXT("grabReleased"));
 	}
+	*/
 
 	
 }

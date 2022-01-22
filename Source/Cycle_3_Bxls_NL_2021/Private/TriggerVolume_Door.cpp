@@ -13,7 +13,7 @@ void UTriggerVolume_Door::BeginPlay()
 {
 	Super::BeginPlay();
 	//on cherche le composant BoxCollision et on le paramètre en fonction de deux events OnOnverlapBegin & OnOverlapEnd
-	SetupBoxCollider();
+	//SetupBoxCollider();
 }
 
 void UTriggerVolume_Door::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
@@ -37,7 +37,7 @@ void UTriggerVolume_Door::SetupBoxCollider()
 	boxCollider = GetOwner()->FindComponentByClass<UBoxComponent>();
 	if (ensure(boxCollider))
 	{
-		UE_LOG(LogTemp, Warning, TEXT("Box collider Component find"));
+		//UE_LOG(LogTemp, Warning, TEXT("Box collider Component find"));
 		//comme OnOverlapBegin et OnEndOverlap agissent comme des custom event dynamiques, il faut leur ajouter un AddDynamic
 		boxCollider->OnComponentBeginOverlap.AddDynamic(this,&UTriggerVolume_Door::OnOverlapBegin);
 		boxCollider->OnComponentEndOverlap.AddDynamic(this,&UTriggerVolume_Door::OnOverlapEnd);
@@ -53,7 +53,7 @@ Note ://
 void UTriggerVolume_Door::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherActor,
                                          UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
-	UE_LOG(LogTemp, Warning, TEXT("OverlapBegin_TriggerVolumeOk"));
+	//UE_LOG(LogTemp, Warning, TEXT("OverlapBegin_TriggerVolumeOk"));
 	//lorqu'un objet entre dans la triggerZone alors on déclenche le script associé avec le delegate dans DoorBalance -> AddBalanceMass(actor)
 	//on lui passe en paramètre l'acteur en collision 
 	triggerVolumeBeginCollision.Broadcast(OtherActor);
@@ -68,7 +68,7 @@ Note ://
 void UTriggerVolume_Door::OnOverlapEnd(UPrimitiveComponent* OverlappedComp, AActor* OtherActor,
 	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
 {
-	UE_LOG(LogTemp, Warning, TEXT("OverlapEnd_TriggerVolumeOk"));
+	//UE_LOG(LogTemp, Warning, TEXT("OverlapEnd_TriggerVolumeOk"));
 	//lorqu'un objet entre dans la triggerZone alors on déclenche le script associé avec le delegate dans DoorBalance -> SoustrBalanceMass(actor)
 	//on lui passe en paramètre l'acteur en collision 
 	triggerVolumeEndCollision.Broadcast(OtherActor);
