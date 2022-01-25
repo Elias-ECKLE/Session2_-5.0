@@ -18,7 +18,6 @@ UTriggerEndGame::UTriggerEndGame()
 void UTriggerEndGame::BeginPlay()
 {
 	Super::BeginPlay();
-
 	SetupBoxCollider();
 	
 }
