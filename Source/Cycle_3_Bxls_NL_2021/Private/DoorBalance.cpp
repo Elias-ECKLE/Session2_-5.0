@@ -8,7 +8,7 @@ UDoorBalance::UDoorBalance()
 {
 	PrimaryComponentTick.bCanEverTick = true;
 	
-	flt_MassMax = 150.f;
+	str_RefObj = "StaticMeshActor_23";
 	isDoorOpen=false;
 }
 
@@ -23,10 +23,7 @@ void UDoorBalance::BeginPlay()
 void UDoorBalance::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
-
-	//on check constamment si la masse de la triggerZone est supérieure ou non à sa limite fixée, si oui alors on lance l'animation 
-	//de la porte avec la timeline 
-	CompareBalanceToMaxMass();
+	
 	//on fait avancer la timeline de frame en frame
 	timeline.TickTimeline(DeltaTime);
 }
@@ -54,8 +51,8 @@ void UDoorBalance::SetupDelegateTriggerCollision()
 {
 	if(ensure(triggerVolumeInstance))
 	{
-		triggerVolumeInstance->triggerVolumeBeginCollision.AddDynamic(this,&UDoorBalance::AddBalanceMass);
-		triggerVolumeInstance->triggerVolumeEndCollision.AddDynamic(this,&UDoorBalance::SoustrBalanceMass);
+		triggerVolumeInstance->triggerVolumeBeginCollision.AddDynamic(this,&UDoorBalance::UDoorBalance::CompareObjectToObjectReference);
+		triggerVolumeInstance->triggerVolumeEndCollision.AddDynamic(this,&UDoorBalance::UDoorBalance::CompareObjectToObjectReference);
 	}
 	else
 	{
@@ -143,48 +140,18 @@ void UDoorBalance::ToogleAndPlayDoor()
 
 
 //----------------------------------------------------balance Mass----------------------------------------------------
-/****************************************************************************************************
-Description : Methode qui fait le lien avec les autres lorsque on ajoute un objet dans la triggerZone
-Input : acteur en collision avec la trigger zone -> issue du delegate triggerVolumeBeginCollision dans la classe TriggerVolume_Door.h
-Output : None
-Note ://
-******************************************************************************************************/
-void UDoorBalance::AddBalanceMass(AActor* otherActor)
-{
-	float flt_massActor = GetMassFromObjectCollided(otherActor);
-	UpdateMass(flt_massActor,true);
-}
 
-/****************************************************************************************************
-Description : Idem mais lorqu'un objet sort de la triggerZone
-Input : acteur en collision avec la trigger zone -> issue du delegate triggerVolumeEndCollision dans la classe TriggerVolume_Door.h
-Output : None
-Note ://
-******************************************************************************************************/
-void UDoorBalance::SoustrBalanceMass(AActor* otherActor)
+FString UDoorBalance::GetNameFromObjectCollided(AActor* actor)
 {
-	float flt_massActor = GetMassFromObjectCollided(otherActor);
-	UpdateMass(flt_massActor,false);
-}
-
-/****************************************************************************************************
-Description : Methode qui récupère la masse des objets entrés ou sorti de la triggerZone
-Input : acteur en collision avec la trigger zone -> issue du delegate triggerVolumeBeginCollision ou triggerVolumeEndCollision
-Output : float mass
-Note ://
-******************************************************************************************************/
-float UDoorBalance::GetMassFromObjectCollided(AActor* actor)
-{
+	FString str_NameActor ="";
 	if(ensure(actor))
 	{
-		UStaticMeshComponent* actorMesh = actor->FindComponentByClass<UStaticMeshComponent>();
-		float flt_massActor = 0.f;
-	
-		if(ensure(actorMesh))
+		if(ensure(actor))
 		{
-			flt_massActor = actorMesh->GetMass();
-			UE_LOG(LogTemp, Warning, TEXT("Static mesh actor collided find"));
-			return flt_massActor;
+			str_NameActor = actor->GetName();
+			//UE_LOG(LogTemp, Warning, TEXT("Static mesh actor collided find"));
+			UE_LOG(LogTemp, Warning, TEXT("%s"), *str_NameActor);
+			return str_NameActor;
 		}
 		else
 		{
@@ -203,39 +170,16 @@ float UDoorBalance::GetMassFromObjectCollided(AActor* actor)
 		}
 		UE_LOG(LogTemp, Error, TEXT("Actor not find"));
 	}
-	return 0.f;
+	return "";
 }
 
-/****************************************************************************************************
-Description : Méthode qui met à jour la quantité de masse dans la triggerZone
-Input : reçoit la nouvelle masse à soit ajouter, soit enlever + bool 
-Output : None
-
-Note ://
-******************************************************************************************************/
-void UDoorBalance::UpdateMass(float flt_valueOperate, bool isIncrm)
+void UDoorBalance::CompareObjectToObjectReference(AActor* actor)
 {
-	isIncrm ? flt_BalanceMass+= flt_valueOperate : flt_BalanceMass-= flt_valueOperate;
-
-	if (GEngine != nullptr)
-	{
-		FString theFloatStr = FString::SanitizeFloat(flt_BalanceMass);
-		GEngine->AddOnScreenDebugMessage(6, 5, FColor::Blue, theFloatStr);
-	}
-}
-
-/****************************************************************************************************
-Description : On compare la quantité de masse dans la triggerZone par rapport au maximum fixé
-Input :
-Output : None
-
-Note ://
-******************************************************************************************************/
-void UDoorBalance::CompareBalanceToMaxMass()
-{
-	flt_BalanceMass>flt_MassMax ? isDoorOpen=true : isDoorOpen=false;
+	str_InstObj = GetNameFromObjectCollided(actor);
+	str_InstObj==str_RefObj ? isDoorOpen=true : isDoorOpen=false;
 	ToogleAndPlayDoor();
 }
+
 
 
 

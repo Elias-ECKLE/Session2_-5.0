@@ -46,14 +46,10 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void SetupDelegateTriggerCollision();
 
-	//comparison mass
-	UFUNCTION()
-	void AddBalanceMass(AActor* otherActor);
-	UFUNCTION()
-	void SoustrBalanceMass(AActor* otherActor);
-	float GetMassFromObjectCollided(AActor* actor);
-	void UpdateMass(float flt_valueOperate, bool isIncrm);
-	void CompareBalanceToMaxMass();
+	//comparison obj name instance
+	FString GetNameFromObjectCollided(AActor* actor);
+	UFUNCTION(BlueprintCallable)
+	void CompareObjectToObjectReference(AActor* actor);
 
 	//animation door
 	UFUNCTION(BlueprintCallable)
@@ -83,7 +79,8 @@ private :
 	
 
 	//propriétés de comparaison entre les acteurs entrant et sortant la trigger zone
-	float flt_BalanceMass;
-	UPROPERTY(EditDefaultsOnly)  float flt_MassMax;
+	UPROPERTY()
+	FString str_InstObj;
+	UPROPERTY(EditDefaultsOnly) FString str_RefObj;
 	
 };
