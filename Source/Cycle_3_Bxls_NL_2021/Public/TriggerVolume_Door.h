@@ -60,5 +60,6 @@ public:
 private :
 
 	UBoxComponent* boxCollider;
+
 	
 };

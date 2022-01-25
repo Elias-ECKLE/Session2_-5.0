@@ -40,6 +40,10 @@ protected:
 public:	
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
+	UFUNCTION(BlueprintCallable)
+	int GetNbObjetTriggerZone();
+	UFUNCTION(BlueprintCallable)
+	int GetNbObjetMaxTriggerZone();
 	//Delegate trigger
 	UFUNCTION(BlueprintCallable)
 	void GetTriggerCollision(UTriggerVolume_Door* triggerVolume);
@@ -63,7 +67,8 @@ public:
 
 
 private :
-
+	int nbObjetTriggerZone;
+	int nbObjetMaxTriggerZone;
 	//variables delegate
 	UTriggerVolume_Door* triggerVolumeInstance;
 

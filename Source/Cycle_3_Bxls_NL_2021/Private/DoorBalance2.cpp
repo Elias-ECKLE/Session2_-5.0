@@ -14,6 +14,8 @@ UDoorBalance2::UDoorBalance2()
 	array_IsTriggersZoneCompleted.Add(false);
 	array_IsTriggersZoneCompleted.Add(false);
 	array_IsTriggersZoneCompleted.Add(false);
+
+
 }
 
 

@@ -26,7 +26,7 @@ public:
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
-	
+
 	//Delegate trigger
 	UFUNCTION(BlueprintCallable)
 	void GetTriggersCollision(UTriggerVolume_Door2* triggerZone1, UTriggerVolume_Door2* triggerZone2, UTriggerVolume_Door2* triggerZone3);
@@ -41,6 +41,7 @@ public:
 	void UpdateTriggersZoneState(int32 tagTrigger);
 	UFUNCTION(BlueprintCallable)
 	void CompareTriggersState();
+
 	
 	//variables et timeline pour faire l'animation de la porte
 	UPROPERTY(EditAnywhere) UCurveFloat* doorCurve;	

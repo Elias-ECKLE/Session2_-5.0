@@ -10,6 +10,9 @@ UDoorBalance::UDoorBalance()
 	
 	str_RefObj = "StaticMeshActor_23";
 	isDoorOpen=false;
+
+	nbObjetTriggerZone=0;
+	nbObjetMaxTriggerZone=1;
 }
 
 
@@ -28,6 +31,14 @@ void UDoorBalance::TickComponent(float DeltaTime, ELevelTick TickType, FActorCom
 	timeline.TickTimeline(DeltaTime);
 }
 
+int UDoorBalance::GetNbObjetTriggerZone()
+{
+	return nbObjetTriggerZone;
+}
+int UDoorBalance::GetNbObjetMaxTriggerZone()
+{
+	return nbObjetMaxTriggerZone;
+}
 
 //--------------------------------------delegate collision trigger--------------------------------------
 /****************************************************************************************************
@@ -124,6 +135,7 @@ void UDoorBalance::ToogleAndPlayDoor()
 		if(isDoorOpen)
 		{
 			timeline.Play();
+			nbObjetTriggerZone=1;
 			if (GEngine != nullptr)
 			{
 				GEngine->AddOnScreenDebugMessage(7, 5, FColor::Blue,TEXT("ToogleAndPlayDoorOk"));

@@ -43,6 +43,11 @@ public:
 	float GetMassFromObjectCollided(AActor* actor);
 	void CompareBalanceToMassMax();
 
+	UFUNCTION(BlueprintCallable)
+	float GetMasseActuelle();
+	UFUNCTION(BlueprintCallable)
+	float GetMasseMax();
+
 	//delegate
 	//variables custom event
 	UPROPERTY(BlueprintAssignable)
@@ -50,17 +55,16 @@ public:
 	UPROPERTY(EditAnywhere)
 	int32 int_Tag;
 
-
+	//comparison mass
+	UPROPERTY(EditAnywhere,Category=masse)
+	float flt_massActuelle;
+	UPROPERTY()
+	float flt_massMax;
 
 private :
 
 	//trigger zone
 	UBoxComponent* boxCollider;
-	
-	//comparison mass
-	float flt_massActuelle;
-	UPROPERTY()
-	float flt_massMax;
 	UPROPERTY()
 	bool isTriggerZoneCompleted;
 		

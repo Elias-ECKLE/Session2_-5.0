@@ -137,4 +137,14 @@ void UTriggerVolume_Door2::CompareBalanceToMassMax()
 
 }
 
+float UTriggerVolume_Door2::GetMasseActuelle()
+{
+	return flt_massActuelle;
+}
+
+float UTriggerVolume_Door2::GetMasseMax()
+{
+	return flt_massMax;
+}
+
 
